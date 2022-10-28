@@ -1,20 +1,20 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
-import PiggyBankWithSigner from "../contracts/piggy_bank/PiggyBankWithSigner";
-import { useAppContext } from "../hooks/useAppContext";
-import connectMetamask from "../utils/connectMetamask";
-import getErrorMessage from "../utils/getErrorMessage";
-import DepositButton from "./DepositButton";
-import ErrorView from "./ErrorView";
-import Loader from "./Loader";
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import PiggyBankWithSigner from '../contracts/piggy_bank/PiggyBankWithSigner';
+import { useAppContext } from '../hooks/useAppContext';
+import connectMetamask from '../utils/connectMetamask';
+import getErrorMessage from '../utils/getErrorMessage';
+import DepositButton from './DepositButton';
+import ErrorView from './ErrorView';
+import Loader from './Loader';
 
 const ParentPiggyBankControlButtons = ({
   address,
   owner,
   isWithdrawAvailable,
 }) => {
-  const [error, setError] = useState();
-  const [isPending, setPending] = useState(false);
+  const [error, setError] = useState<string | undefined>();
+  const [isPending, setPending] = useState<boolean>(false);
   const { contextState, updateContextState } = useAppContext();
   const currentAccount = contextState?.currentAccount;
   const router = useRouter();
@@ -27,16 +27,17 @@ const ParentPiggyBankControlButtons = ({
 
   const handleWithdrawClick = async () => {
     setPending(true);
-    setError("");
+    setError('');
     try {
       const tx = await piggyBankWithSigner.withdraw();
       await tx.wait();
       router.reload();
-    } catch (error) {
+    } catch (error: any) {
+      //!! Посмотреть в каком виде возвращается ошибка и прописать интерфейс
       const message = getErrorMessage(error.code);
       setError(message);
       setTimeout(() => {
-        setError("");
+        setError('');
       }, 2000);
       console.error(message);
     } finally {
@@ -55,7 +56,7 @@ const ParentPiggyBankControlButtons = ({
               onClick={handleWithdrawClick}
               disabled={!isWithdrawAvailable}
               className={`my-2 rounded border border-pink-300 bg-pink-100 py-1 px-4 text-xl   ${
-                isWithdrawAvailable && "cursor-pointer hover:bg-pink-300"
+                isWithdrawAvailable && 'cursor-pointer hover:bg-pink-300'
               }`}
             >
               Get withdraw

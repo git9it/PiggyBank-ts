@@ -20,7 +20,7 @@
     "**/*.ts",
     "**/*.tsx",
     "components/Header.js",
-    "components/DepositButton.js"
+    "components/DepositButton.tsx"
   ],
   "exclude": ["node_modules"]
 }

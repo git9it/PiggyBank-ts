@@ -1,13 +1,24 @@
-import { ethers } from "ethers";
-import { useRouter } from "next/router";
-import { useRef } from "react";
-import getErrorMessage from "../utils/getErrorMessage";
+import { ethers } from 'ethers';
+import { useRouter } from 'next/router';
+import React, { useRef } from 'react';
+import getErrorMessage from '../utils/getErrorMessage';
+import { Contract } from 'ethers';
 
-const DepositButton = ({ setError, setPending, piggyBankWithSigner }) => {
+interface IDepositButton {
+  setError: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setPending: React.Dispatch<React.SetStateAction<boolean>>;
+  piggyBankWithSigner: Contract;
+}
+
+const DepositButton = ({
+  setError,
+  setPending,
+  piggyBankWithSigner,
+}: IDepositButton) => {
   const router = useRouter();
   const amountRef = useRef();
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setPending(true);
     setError();
@@ -21,7 +32,7 @@ const DepositButton = ({ setError, setPending, piggyBankWithSigner }) => {
       const message = getErrorMessage(error.code);
       setError(message);
       setTimeout(() => {
-        setError("");
+        setError('');
       }, 2000);
       console.error(message);
     } finally {
