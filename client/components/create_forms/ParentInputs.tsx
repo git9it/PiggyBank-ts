@@ -1,4 +1,10 @@
-const ParentInputs = ({ ownerRef, descRef }) => {
+import { RefObject, useRef } from 'react';
+interface IParentInput {
+  ownerRef: RefObject<HTMLInputElement>;
+  descRef: RefObject<HTMLTextAreaElement>;
+}
+
+const ParentInputs = ({ ownerRef, descRef }: IParentInput) => {
   return (
     <>
       <label className="block text-3xl text-pink-500" htmlFor="owner">
@@ -21,7 +27,6 @@ const ParentInputs = ({ ownerRef, descRef }) => {
         className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 text-xl leading-tight shadow focus:outline-none"
         ref={descRef}
         name="desc"
-        type="text"
         placeholder="enter description"
       />
       <br />

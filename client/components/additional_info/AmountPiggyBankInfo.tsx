@@ -1,9 +1,9 @@
-import { ethers } from "ethers";
-import { useEffect, useState } from "react";
-import AmountPiggyBank from "../../contracts/additional_piggy_banks/AmountPiggyBank";
+import { ethers } from 'ethers';
+import { useEffect, useState } from 'react';
+import AmountPiggyBank from '../../contracts/additional_piggy_banks/AmountPiggyBank';
 
-const AmountPiggyBankInfo = ({ address }) => {
-  const [targetAmount, setTargetAmount] = useState("");
+const AmountPiggyBankInfo = (address: string) => {
+  const [targetAmount, setTargetAmount] = useState('');
   const amountPiggyBank = AmountPiggyBank(address);
 
   useEffect(() => {

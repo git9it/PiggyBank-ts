@@ -1,16 +1,28 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import ApprovePiggyBank from "../../contracts/additional_piggy_banks/ApprovePiggyBank";
-import ContractWithSinger from "../../contracts/ContractWithSigner";
-import { useAppContext } from "../../hooks/useAppContext";
-import getErrorMessage from "../../utils/getErrorMessage";
-import ErrorView from "../ErrorView";
-import Loader from "../Loader";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import ApprovePiggyBank from '../../contracts/additional_piggy_banks/ApprovePiggyBank';
+import ContractWithSinger from '../../contracts/ContractWithSigner';
+import { useAppContext } from '../../hooks/useAppContext';
+import getErrorMessage from '../../utils/getErrorMessage';
+import ErrorView from '../ErrorView';
+import Loader from '../Loader';
+
+class ProviderRpcError extends Error {
+  code: string;
+  message: string;
+  data?: unknown;
+  constructor(message: string, code: string, data?: unknown) {
+    super();
+    this.code = code;
+    this.message = message;
+    this.data = data;
+  }
+}
 
 const ApprovePiggyBankInfo = ({ address }) => {
-  const [approver, setApprover] = useState("");
-  const [isApproved, setApproved] = useState(false);
-  const [error, setError] = useState();
+  const [approver, setApprover] = useState<string>('');
+  const [isApproved, setApproved] = useState<boolean>(false);
+  const [error, setError] = useState<string>();
   const [isPending, setPending] = useState(false);
   const { contextState } = useAppContext();
   const currentAccount = contextState?.currentAccount;
@@ -32,18 +44,20 @@ const ApprovePiggyBankInfo = ({ address }) => {
 
   const handleApproveClick = async () => {
     setPending(true);
-    setError("")
+    setError('');
     try {
       const tx = await approvePiggyBankWithSigner.setApproved();
       await tx.wait();
       router.reload();
     } catch (error) {
-      const message = getErrorMessage(error.code);
-      setError(message);
-      setTimeout(() => {
-        setError("");
-      }, 2000);
-      console.error(message);
+      if (error instanceof ProviderRpcError) {
+        const message = getErrorMessage(error);
+        setError(message);
+        setTimeout(() => {
+          setError('');
+        }, 2000);
+        console.error(message);
+      }
     } finally {
       setPending(false);
     }

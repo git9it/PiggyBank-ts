@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from 'react';
 
 export const AppContext = createContext();
 
@@ -6,8 +6,13 @@ export const AppContextProvider = ({ children }) => {
   const [contextState, setContextState] = useState();
 
   useEffect(() => {
-    if(typeof window !== "undefined" && sessionStorage.getItem("currentAccount")){
-      updateContextState({ currentAccount: sessionStorage.getItem("currentAccount")})
+    if (
+      typeof window !== 'undefined' &&
+      sessionStorage.getItem('currentAccount')
+    ) {
+      updateContextState({
+        currentAccount: sessionStorage.getItem('currentAccount'),
+      });
     }
   }, []);
 

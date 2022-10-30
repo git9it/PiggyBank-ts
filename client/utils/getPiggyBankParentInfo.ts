@@ -1,3 +1,4 @@
+import { Address } from 'cluster';
 import { ethers } from 'ethers';
 import defaultProvider from '../contracts/defaultProvider';
 import PiggyBank from '../contracts/piggy_bank/PiggyBank';

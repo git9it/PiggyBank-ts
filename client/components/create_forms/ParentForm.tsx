@@ -1,33 +1,39 @@
-import { useRouter } from "next/router";
-import { useRef, useState } from "react";
-import data from "../../data/data";
-import { useAppContext } from "../../hooks/useAppContext";
-import connectMetamask from "../../utils/connectMetamask";
-import getErrorMessage from "../../utils/getErrorMessage";
-import ErrorView from "../ErrorView";
-import Loader from "../Loader";
-import FormTypesSelect from "./FormTypesSelect";
-import ParentInputs from "./ParentInputs";
+import { useRouter } from 'next/router';
+import { useRef, useState } from 'react';
+import data from '../../data/data';
+import { useAppContext } from '../../hooks/useAppContext';
+import connectMetamask from '../../utils/connectMetamask';
+import getErrorMessage from '../../utils/getErrorMessage';
+import ErrorView from '../ErrorView';
+import Loader from '../Loader';
+import FormTypesSelect from './FormTypesSelect';
+import ParentInputs from './ParentInputs';
 
 const ParentForm = () => {
   const [piggyBankType, setPiggyBankType] = useState(Object.keys(data)[0]);
   const [additionalInfo, setAdditionalInfo] = useState({});
-  const [error, setError] = useState();
+  const [error, setError] = useState<string>();
   const [isPending, setPending] = useState(false);
   const { contextState, updateContextState } = useAppContext();
   const currentAccount = contextState?.currentAccount;
   const router = useRouter();
-  const ownerRef = useRef();
-  const descRef = useRef();
+  const ownerRef = useRef<HTMLInputElement>(null);
+  const descRef = useRef<HTMLTextAreaElement>(null);
 
-
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    console.log(event);
     event.preventDefault();
-    if (!ownerRef.current.value) {
-      setError("No wallet input");
+    if (!ownerRef?.current?.value) {
+      setError('No wallet input');
       setTimeout(() => {
-        setError();
+        setError('');
+      }, 2000);
+      return;
+    }
+    if (!descRef?.current?.value) {
+      setError('No description input');
+      setTimeout(() => {
+        setError('');
       }, 2000);
       return;
     }
@@ -39,14 +45,15 @@ const ParentForm = () => {
         additionalInfo
       );
       router.push({
-        pathname: "/piggy_banks",
+        pathname: '/piggy_banks',
         query: { user: ownerRef.current.value },
       });
     } catch (error) {
+      console.log(error);
       const message = getErrorMessage(error);
       setError(message);
       setTimeout(() => {
-        setError("");
+        setError('');
       }, 2000);
       console.error(message);
     } finally {
@@ -63,15 +70,16 @@ const ParentForm = () => {
       className="ml-6 mb-4 max-w-6xl rounded border-2 border-pink-300 bg-white px-8 pt-6 pb-8 shadow-md"
       onSubmit={handleSubmit}
     >
+      //
       <ParentInputs ownerRef={ownerRef} descRef={descRef} />
+      ///
       <FormTypesSelect
         piggyBankType={piggyBankType}
         setPiggyBankType={setPiggyBankType}
       />
-
-      {data[piggyBankType].form({additionalInfo, setAdditionalInfo})}
+      {data[piggyBankType].form({ additionalInfo, setAdditionalInfo })}
       <br />
-      {!currentAccount ? (
+      {!currentAccount ? ( //выводит кнопку метамаска, если не подключен
         <div className="flex justify-center">
           <button
             className="rounded-2xl border-2 border-pink-500 bg-pink-100 px-[18px] py-1 text-5xl font-semibold hover:bg-pink-300"
@@ -91,7 +99,6 @@ const ParentForm = () => {
           Create
         </button>
       )}
-
       {error && <ErrorView error={error} />}
     </form>
   );
