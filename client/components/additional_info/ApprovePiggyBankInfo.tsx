@@ -19,7 +19,7 @@ class ProviderRpcError extends Error {
   }
 }
 
-const ApprovePiggyBankInfo = ({ address }) => {
+const ApprovePiggyBankInfo = ({ address }: { address: string }) => {
   const [approver, setApprover] = useState<string>('');
   const [isApproved, setApproved] = useState<boolean>(false);
   const [error, setError] = useState<string>();

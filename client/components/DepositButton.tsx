@@ -21,7 +21,7 @@ const DepositButton = ({
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setPending(true);
-    setError();
+    setError('');
 
     try {
       const amount = ethers.utils.parseEther(amountRef.current.value);

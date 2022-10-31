@@ -1,7 +1,14 @@
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-const TimeForm = ({ additionalInfo, setAdditionalInfo }) => {
+interface ITimeForm {
+  setAdditionalInfo: React.Dispatch<React.SetStateAction<{}>>;
+  additionalInfo: {
+    date: number | undefined;
+  };
+}
+
+const TimeForm = ({ additionalInfo, setAdditionalInfo }: ITimeForm) => {
   return (
     <div>
       <label className="block text-3xl text-pink-500" htmlFor="date">
@@ -12,7 +19,9 @@ const TimeForm = ({ additionalInfo, setAdditionalInfo }) => {
         <DatePicker
           className="w-80 text-xl"
           selected={additionalInfo.date || new Date()}
-          onChange={(date) => setAdditionalInfo({ ...additionalInfo, date })}
+          onChange={(date: number) =>
+            setAdditionalInfo({ ...additionalInfo, date })
+          }
           dateFormat="MMMM d, yyyy h:mm aa"
         />
       </div>

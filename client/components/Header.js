@@ -1,11 +1,11 @@
-import Link from "next/link";
-import { useState, useEffect } from "react";
-import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
-import { useRouter } from "next/router";
-import { useAppContext } from "../hooks/useAppContext";
-import connectMetamask from "../utils/connectMetamask";
-import disconnectMetamask from "../utils/disconnectMetamask";
-import Image from "next/image";
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import Jazzicon, { jsNumberForAddress } from 'react-jazzicon';
+import { useRouter } from 'next/router';
+import { useAppContext } from '../hooks/useAppContext';
+import connectMetamask from '../utils/connectMetamask';
+import disconnectMetamask from '../utils/disconnectMetamask';
+import Image from 'next/image';
 
 const Header = () => {
   const { contextState, updateContextState } = useAppContext();
@@ -23,11 +23,11 @@ const Header = () => {
       }
     };
     if (ethereum) {
-      ethereum.on("accountsChanged", handleChangeAccount);
-      ethereum.on("chainChanged", handleChangeNetwork);
+      ethereum.on('accountsChanged', handleChangeAccount);
+      ethereum.on('chainChanged', handleChangeNetwork);
       return () => {
-        ethereum.removeListener("accountsChanged", handleChangeAccount);
-        ethereum.removeListener("chainChanged", handleChangeNetwork);
+        ethereum.removeListener('accountsChanged', handleChangeAccount);
+        ethereum.removeListener('chainChanged', handleChangeNetwork);
       };
     }
   }, []);
@@ -46,7 +46,7 @@ const Header = () => {
   const handleFindAddressClick = () => {
     setMenuVisible(false);
     router.push({
-      pathname: "/piggy_banks",
+      pathname: '/piggy_banks',
       query: { user: currentAccount },
     });
   };
@@ -129,7 +129,7 @@ const Header = () => {
                 seed={jsNumberForAddress(currentAccount)}
               />
               {currentAccount.toString().slice(0, 5) +
-                "..." +
+                '...' +
                 currentAccount.toString().slice(38)}
             </span>
           </div>

@@ -5,11 +5,12 @@ import AmountPiggyBank from '../../contracts/additional_piggy_banks/AmountPiggyB
 const AmountPiggyBankInfo = (address: string) => {
   const [targetAmount, setTargetAmount] = useState('');
   const amountPiggyBank = AmountPiggyBank(address);
-
+  console.log(address);
   useEffect(() => {
     (async () => {
       try {
         const targetAmount = await amountPiggyBank.targetAmount();
+        console.log(targetAmount);
         setTargetAmount(ethers.utils.formatEther(targetAmount));
       } catch (error) {
         console.error(error);

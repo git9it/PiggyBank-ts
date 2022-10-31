@@ -3,7 +3,7 @@
  */
 const nextConfig = {
   env: {
-    targetChainId: "0x4",
+    targetChainId: '0x5',
   },
 };
 

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import TimePiggyBank from "../../contracts/additional_piggy_banks/TimePiggyBank";
+import { useEffect, useState } from 'react';
+import TimePiggyBank from '../../contracts/additional_piggy_banks/TimePiggyBank';
 
-const TimePiggyBankInfo = ({address}) => {
+const TimePiggyBankInfo = ({ address }: { address: string }) => {
   const [endTime, setEndTime] = useState(0);
   const timePiggyBank = TimePiggyBank(address);
 
@@ -15,7 +15,11 @@ const TimePiggyBankInfo = ({address}) => {
     })();
   }, []);
 
-  return <h2 className="text-2xl">End Time: {(new Date(endTime * 1000)).toLocaleString()}</h2>;
+  return (
+    <h2 className="text-2xl">
+      End Time: {new Date(endTime * 1000).toLocaleString()}
+    </h2>
+  );
 };
 
 export default TimePiggyBankInfo;

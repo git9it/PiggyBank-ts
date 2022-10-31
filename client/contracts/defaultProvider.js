@@ -1,5 +1,5 @@
-import { ethers } from "ethers";
+import { ethers } from 'ethers';
 
-const defaultProvider = new ethers.providers.InfuraProvider("rinkeby");
+const defaultProvider = new ethers.providers.InfuraProvider('goerli');
 
 export default defaultProvider;

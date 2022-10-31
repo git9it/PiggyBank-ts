@@ -1,6 +1,14 @@
-import data from "../../data/data";
+import data from '../../data/data';
 
-const FormTypesSelect = ({ piggyBankType, setPiggyBankType }) => {
+interface IFormTypesSelect {
+  setPiggyBankType: React.Dispatch<React.SetStateAction<string | undefined>>;
+  piggyBankType: string;
+}
+
+const FormTypesSelect = ({
+  piggyBankType,
+  setPiggyBankType,
+}: IFormTypesSelect) => {
   const renderOptions = Object.entries(data).map((entry) => (
     <option value={entry[0]} key={entry[0]}>
       {entry[1].title}

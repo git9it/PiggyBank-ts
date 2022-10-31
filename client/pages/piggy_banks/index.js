@@ -1,16 +1,16 @@
-import FindPiggyBankForm from "../../components/FindPiggyBankForm";
-import FindUsersPiggyBanksForm from "../../components/FindUsersPiggyBanksForm";
-import Layout from "../../components/Layout";
-import OwnerPiggyBanks from "../../components/OwnerPiggyBanks";
-import PiggyBankView from "../../components/PiggyBankView";
-import getPiggyBankParentInfo from "../../utils/getPiggyBankParentInfo";
-import { useEffect } from "react";
-import getPiggyBankTypeByAddressAndOwner from "../../utils/getPiggyBankTypeByAddressAndOwner";
-import piggyBankMaster from "../../contracts/piggyBankMaster";
+import FindPiggyBankForm from '../../components/FindPiggyBankForm';
+import FindUsersPiggyBanksForm from '../../components/FindUsersPiggyBanksForm';
+import Layout from '../../components/Layout';
+import OwnerPiggyBanks from '../../components/OwnerPiggyBanks';
+import PiggyBankView from '../../components/PiggyBankView';
+import getPiggyBankParentInfo from '../../utils/getPiggyBankParentInfo';
+import { useEffect } from 'react';
+import getPiggyBankTypeByAddressAndOwner from '../../utils/getPiggyBankTypeByAddressAndOwner';
+import piggyBankMaster from '../../contracts/piggyBankMaster';
 
 const PiggyBanksPage = (props) => {
   useEffect(() => {
-    document.title = "PiggyBank";
+    document.title = 'PiggyBank';
   });
   if (props.arrayOfAddressesAndTypes) {
     if (props.arrayOfAddressesAndTypes.length > 0) {
@@ -54,7 +54,7 @@ export default PiggyBanksPage;
 
 export async function getServerSideProps(props) {
   const { user, address, type } = props.query;
-
+  console.log(props);
   if (address) {
     try {
       const response = await getPiggyBankParentInfo(address);
