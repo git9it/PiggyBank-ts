@@ -10,13 +10,25 @@ interface IDepositButton {
   piggyBankWithSigner: Contract;
 }
 
+class ProviderRpcError extends Error {
+  code: string;
+  message: string;
+  data?: unknown;
+  constructor(message: string, code: string, data?: unknown) {
+    super();
+    this.code = code;
+    this.message = message;
+    this.data = data;
+  }
+}
+
 const DepositButton = ({
   setError,
   setPending,
   piggyBankWithSigner,
 }: IDepositButton) => {
   const router = useRouter();
-  const amountRef = useRef();
+  const amountRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -24,17 +36,21 @@ const DepositButton = ({
     setError('');
 
     try {
-      const amount = ethers.utils.parseEther(amountRef.current.value);
-      const tx = await piggyBankWithSigner.deposit({ value: amount });
-      await tx.wait();
-      router.reload();
+      if (amountRef.current) {
+        const amount = ethers.utils.parseEther(amountRef.current.value);
+        const tx = await piggyBankWithSigner.deposit({ value: amount });
+        await tx.wait();
+        router.reload();
+      }
     } catch (error) {
-      const message = getErrorMessage(error.code);
-      setError(message);
-      setTimeout(() => {
-        setError('');
-      }, 2000);
-      console.error(message);
+      if (error instanceof ProviderRpcError) {
+        const message = getErrorMessage(error);
+        setError(message);
+        setTimeout(() => {
+          setError('');
+        }, 2000);
+        console.error(message);
+      }
     } finally {
       setPending(false);
     }

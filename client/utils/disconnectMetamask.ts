@@ -1,4 +1,4 @@
-const disconnectMetamask = async (updateFunc) => {
+const disconnectMetamask = async (updateFunc: Function) => {
   updateFunc({ currentAccount: null });
   sessionStorage.clear();
 };

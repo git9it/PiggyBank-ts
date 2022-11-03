@@ -1,20 +1,25 @@
-import { useRouter } from "next/router";
-import { useRef } from "react";
+import { useRouter } from 'next/router';
+import { ChangeEventHandler, useRef } from 'react';
 
 const FindUsersPiggyBanksForm = () => {
   const router = useRouter();
-  const userRef = useRef();
+  const userRef = useRef<HTMLInputElement>(null);
 
-  const handleFindUserSubmit = (event) => {
+  const handleFindUserSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    router.push({
-      pathname: "/piggy_banks",
-      query: { user: userRef.current.value },
-    });
+    if (userRef.current) {
+      router.push({
+        pathname: '/piggy_banks',
+        query: { user: userRef.current.value },
+      });
+    }
   };
 
   return (
-    <form className="items-center justify-items-center bg-white shadow-xl px-8 pt-6 pb-8 mb-16 border-2 border-t-0 border-pink-300" onSubmit={handleFindUserSubmit}>
+    <form
+      className="items-center justify-items-center bg-white shadow-xl px-8 pt-6 pb-8 mb-16 border-2 border-t-0 border-pink-300"
+      onSubmit={handleFindUserSubmit}
+    >
       <label className="text-2xl" htmlFor="user">
         Enter user address to find info about his piggy banks:
       </label>

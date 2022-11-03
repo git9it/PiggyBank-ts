@@ -1,7 +1,7 @@
 import data from '../../data/data';
 
 interface IFormTypesSelect {
-  setPiggyBankType: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setPiggyBankType: React.Dispatch<React.SetStateAction<string>>;
   piggyBankType: string;
 }
 

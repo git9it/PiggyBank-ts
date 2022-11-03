@@ -1,20 +1,25 @@
-import { useRouter } from "next/router";
-import { useRef } from "react";
+import { useRouter } from 'next/router';
+import { useRef } from 'react';
 
 const FindPiggyBankForm = () => {
   const router = useRouter();
-  const addressRef = useRef();
+  const addressRef = useRef<HTMLInputElement>(null);
 
-  const handleFindAddressSubmit = (event) => {
+  const handleFindAddressSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    router.push({
-      pathname: "/piggy_banks",
-      query: { address: addressRef.current.value },
-    });
+    if (addressRef.current) {
+      router.push({
+        pathname: '/piggy_banks',
+        query: { address: addressRef.current.value },
+      });
+    }
   };
 
   return (
-    <form className="items-center justify-center bg-white shadow-xl px-8 pt-6 pb-8 mt-64 border-2 border-b-0 border-pink-300" onSubmit={handleFindAddressSubmit}>
+    <form
+      className="items-center justify-center bg-white shadow-xl px-8 pt-6 pb-8 mt-64 border-2 border-b-0 border-pink-300"
+      onSubmit={handleFindAddressSubmit}
+    >
       <label className="text-2xl" htmlFor="address">
         Enter piggy bank address to find info:
       </label>

@@ -19,8 +19,10 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "components/Header.js",
-    "components/DepositButton.tsx"
+    "components/Header.jsx",
+    "components/DepositButton.tsx",
+    "hooks/useAppContext.js",
+    "pages/_app.js"
   ],
   "exclude": ["node_modules"]
 }

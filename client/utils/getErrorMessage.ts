@@ -1,9 +1,16 @@
-interface IMetamaskError {
+class ProviderRpcError extends Error {
   code: string;
   message: string;
+  data?: unknown;
+  constructor(message: string, code: string, data?: unknown) {
+    super();
+    this.code = code;
+    this.message = message;
+    this.data = data;
+  }
 }
 
-const getErrorMessage = (error: IMetamaskError) => {
+const getErrorMessage = (error: ProviderRpcError) => {
   if (error.code === 'INSUFFICIENT_FUNDS') {
     return 'Not Enough Funds';
   }

@@ -1,12 +1,22 @@
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import getPiggyBankParentInfo from "../utils/getPiggyBankParentInfo";
-import Loader from "./Loader";
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import getPiggyBankParentInfo from '../utils/getPiggyBankParentInfo';
+import Loader from './Loader';
 
-const PiggyBankCard = (props) => {
-  const [info, setInfo] = useState();
-  const { address, type } = props;
+interface IPiggyBankCard {
+  address: string;
+  type: string;
+}
 
+interface IInfo {
+  owner: string;
+  balance: string;
+  desc: string;
+  isOver: boolean;
+}
+
+const PiggyBankCard = ({ address, type }: IPiggyBankCard) => {
+  const [info, setInfo] = useState<IInfo>();
 
   useEffect(() => {
     (async () => {
@@ -28,17 +38,21 @@ const PiggyBankCard = (props) => {
   return (
     <Link
       href={{
-        pathname: "/piggy_banks",
+        pathname: '/piggy_banks',
         query: { address, type },
       }}
     >
       <a>
         <div
           className={`my-8 mb-4 w-full border-2 border-pink-300  px-8 pt-6 pb-8 shadow-md hover:bg-gray-200 ${
-            info.isOver ? "bg-gray-400" : "bg-white"
+            info.isOver ? 'bg-gray-400' : 'bg-white'
           }`}
         >
-          {info.isOver && <h3 className="text-xl text-center text-red-300">This piggy bank is over</h3>}
+          {info.isOver && (
+            <h3 className="text-xl text-center text-red-300">
+              This piggy bank is over
+            </h3>
+          )}
           <h2 className="text-2xl">Owner: {info.owner}</h2>
           <h2 className="text-2xl">Address: {address}</h2>
           <h2 className="text-2xl">Balance: {info.balance}</h2>

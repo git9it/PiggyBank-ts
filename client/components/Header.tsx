@@ -6,6 +6,13 @@ import { useAppContext } from '../hooks/useAppContext';
 import connectMetamask from '../utils/connectMetamask';
 import disconnectMetamask from '../utils/disconnectMetamask';
 import Image from 'next/image';
+import { ExternalProvider } from '@ethersproject/providers';
+
+type ExtensionForProvider = {
+  on: (event: string, callback: (...params: any) => void) => void;
+};
+
+type EthersProvider = ExternalProvider & ExtensionForProvider;
 
 const Header = () => {
   const { contextState, updateContextState } = useAppContext();
@@ -14,10 +21,10 @@ const Header = () => {
 
   useEffect(() => {
     const { ethereum } = window;
-    const handleChangeAccount = (accounts) => {
+    const handleChangeAccount = (accounts: string[]) => {
       updateContextState({ currentAccount: accounts[0] });
     };
-    const handleChangeNetwork = (chainId) => {
+    const handleChangeNetwork = (chainId: string) => {
       if (chainId != process.env.targetChainId) {
         disconnectMetamask(updateContextState);
       }
@@ -85,13 +92,13 @@ const Header = () => {
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"
-          tabIndex="-1"
+          tabIndex={-1}
         >
           <div className="py-1">
             <button
               className="block w-full px-4 py-2 text-xl text-pink-700 hover:bg-pink-300"
               role="menuitem"
-              tabIndex="-1"
+              tabIndex={-1}
               id="menu-item-0"
               onClick={handleFindAddressClick}
             >
@@ -101,7 +108,7 @@ const Header = () => {
             <button
               className="block w-full px-4 py-2 text-xl text-pink-700 hover:bg-pink-300"
               role="menuitem"
-              tabIndex="-1"
+              tabIndex={-1}
               id="menu-item-1"
               onClick={handleDisconnectMetamaskClick}
             >

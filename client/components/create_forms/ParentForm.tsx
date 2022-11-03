@@ -10,7 +10,9 @@ import FormTypesSelect from './FormTypesSelect';
 import ParentInputs from './ParentInputs';
 
 const ParentForm = () => {
-  const [piggyBankType, setPiggyBankType] = useState(Object.keys(data)[0]);
+  const [piggyBankType, setPiggyBankType] = useState<string>(
+    Object.keys(data)[0]
+  );
   const [additionalInfo, setAdditionalInfo] = useState({});
   const [error, setError] = useState<string>();
   const [isPending, setPending] = useState(false);

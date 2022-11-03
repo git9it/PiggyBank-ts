@@ -1,10 +1,17 @@
 import { ethers } from 'ethers';
 import { ExternalProvider } from '@ethersproject/providers';
 
+type ExtensionForProvider = {
+  on: (event: string, callback: (...params: any) => void) => void;
+  removeListener: (event: string, callback: (...params: any) => void) => void;
+};
+
+type EthersProvider = ExternalProvider & ExtensionForProvider;
+
 //!! разобраться как перенести это в отдельный d.ts
 declare global {
   interface Window {
-    ethereum?: ExternalProvider;
+    ethereum?: EthersProvider;
   }
 }
 

@@ -1,8 +1,18 @@
-import CardView from "./CardView";
-import ParentPiggyBankControlButtons from "./ParentPiggyBankControlButtons";
-import data from "../data/data";
+import CardView from './CardView';
+import ParentPiggyBankControlButtons from './ParentPiggyBankControlButtons';
+import data from '../data/data';
 
-const PiggyBankView = (props) => {
+interface IPiggyBankView {
+  address: string;
+  owner: string;
+  isOver: boolean;
+  desc: string;
+  isWithdrawAvailable: boolean;
+  balance: number;
+  type: string;
+}
+
+const PiggyBankView = (props: IPiggyBankView) => {
   const { address, owner, isOver, desc, isWithdrawAvailable, balance, type } =
     props;
 

@@ -1,11 +1,11 @@
-import Header from "./Header";
+import Header from './Header';
 
-const Layout = ({ children }) => {
+const Layout = ({ children }: { children: JSX.Element[] | JSX.Element }) => {
   return (
     <div>
       <Header />
       <div className="w-full m-auto items-center max-w-[1440px] px-6">
-      {children}
+        {children}
       </div>
     </div>
   );

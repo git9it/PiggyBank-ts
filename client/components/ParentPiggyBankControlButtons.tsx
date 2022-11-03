@@ -8,11 +8,17 @@ import DepositButton from './DepositButton';
 import ErrorView from './ErrorView';
 import Loader from './Loader';
 
+interface IParentPiggyBankControlButtons {
+  address: string;
+  owner: string;
+  isWithdrawAvailable: boolean;
+}
+
 const ParentPiggyBankControlButtons = ({
   address,
   owner,
   isWithdrawAvailable,
-}) => {
+}: IParentPiggyBankControlButtons) => {
   const [error, setError] = useState<string | undefined>();
   const [isPending, setPending] = useState<boolean>(false);
   const { contextState, updateContextState } = useAppContext();

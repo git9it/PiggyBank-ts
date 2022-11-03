@@ -8,7 +8,21 @@ import { useEffect } from 'react';
 import getPiggyBankTypeByAddressAndOwner from '../../utils/getPiggyBankTypeByAddressAndOwner';
 import piggyBankMaster from '../../contracts/piggyBankMaster';
 
-const PiggyBanksPage = (props) => {
+interface IPiggyBanksPage {
+  arrayOfAddressesAndTypes: [];
+  address: string;
+  piggyBankInfo: {
+    address: string;
+    owner: string;
+    isOver: boolean;
+    desc: string;
+    isWithdrawAvailable: boolean;
+    balance: number;
+    type: string;
+  };
+}
+
+const PiggyBanksPage = (props: IPiggyBanksPage) => {
   useEffect(() => {
     document.title = 'PiggyBank';
   });
@@ -52,7 +66,15 @@ const PiggyBanksPage = (props) => {
 
 export default PiggyBanksPage;
 
-export async function getServerSideProps(props) {
+interface IgetServerSideProps {
+  query: {
+    user: string;
+    address: string;
+    type: string;
+  };
+}
+
+export async function getServerSideProps(props: IgetServerSideProps) {
   const { user, address, type } = props.query;
   console.log(props);
   if (address) {
