@@ -50,14 +50,13 @@ const ApprovePiggyBankInfo = ({ address }: { address: string }) => {
       await tx.wait();
       router.reload();
     } catch (error) {
-      if (error instanceof ProviderRpcError) {
-        const message = getErrorMessage(error);
-        setError(message);
-        setTimeout(() => {
-          setError('');
-        }, 2000);
-        console.error(message);
-      }
+      const err = error as ProviderRpcError;
+      const message = getErrorMessage(err);
+      setError(message);
+      setTimeout(() => {
+        setError('');
+      }, 2000);
+      console.error(message);
     } finally {
       setPending(false);
     }
